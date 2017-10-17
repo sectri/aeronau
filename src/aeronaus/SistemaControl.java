@@ -15,6 +15,7 @@ class SistemaControl {
 	void SControl() {
 		
 		char menuNum;
+		int posicioLliure = 5;
 		
 		do {
 			System.out.println("1- Donar d'alta avió al sistema");
@@ -23,10 +24,11 @@ class SistemaControl {
 			System.out.println("4- Informació de l'espai aeri");
 			System.out.println("5- Sortir");
 			
-			menuNum = e.next().charAt(0);			
+			menuNum = e.next().charAt(0);	
+			
 			switch(menuNum) {
 			case '1':
-				int posicioLliure = posicioLliure();
+				posicioLliure = posicioLliure();
 				if(posicioLliure != 5) {
 					crearAeronau(posicioLliure);
 				}
@@ -36,22 +38,37 @@ class SistemaControl {
 				
 				break;
 			case '2':
-				int aeronau;
+				if(posicioLliure != 5) {
+					int aeronau = 5;
 					aeronau = seleccionarNau();
 					if(aeronaus[aeronau] == null) {
-						System.out.println("No hi ha ninguna nau aqui");
+						System.out.println("No hi ha ninguna nau en aquest espai");
 					}
 					else {
 						gestionarNau(aeronau);
 						mantenimentAeri();
 						infoAeri();
 					}
+				}
+				else {
+					System.out.println("No hi ha ninguna nau a pilotar");
+				}
 				break;
-			case '3': 
-				mantenimentAeri();
+			case '3':
+				if(posicioLliure != 5) {
+					mantenimentAeri();
+				}
+				else {
+					System.out.println("No hi han naus per manteniment");
+				}
 				break;
 			case '4':
-				infoAeri();
+				if(posicioLliure != 5) {
+					infoAeri();
+				}
+				else {
+					System.out.println("No hi han naus a mirar");
+				}
 				break;
 			}
 		}
@@ -144,13 +161,31 @@ class SistemaControl {
 		aeronaus[aeronau].setAparcat(false);
 		char accio;
 		do {
-			System.out.println("Q - Pujar / Baixar tren aterratge");
-			System.out.println("W - Accelerar / Frenar");
-			System.out.println("E - Encendre / Apagar motor");
-			System.out.println("R - Posicionar X, Y");
-			System.out.println("A - Agafar / Baixar alçada");
-			System.out.println("S - Aparcar");
-			System.out.println("D - Establir rumb");
+			System.out.print("Q - Pujar / Baixar tren aterratge : ");
+				if(aeronaus[aeronau].getTrenAterratgeDesplegat()) {
+					System.out.println("Desplegat");
+				}
+				else {
+					System.out.println("Plegat");
+				}
+			System.out.println("W - Accelerar / Frenar 		  : " + aeronaus[aeronau].getVelocitat());
+			System.out.print("E - Encendre / Apagar motor	  : ");
+				if(aeronaus[aeronau].getMotorEnces()) {
+					System.out.println("Engegat");
+				}
+				else {
+					System.out.println("Apagat");
+				}
+			System.out.println("R - Posicionar X, Y		  : " + aeronaus[aeronau].getX() + ", " + aeronaus[aeronau].getY());
+			System.out.println("A - Agafar / Baixar alçada	  : " + aeronaus[aeronau].getAlcada());
+			System.out.print("S - Aparcar			  : ");
+				if(aeronaus[aeronau].getAparcat()) {
+					System.out.println("Aparcat");
+				}
+				else {
+					System.out.println("No aparcat");
+				}
+			System.out.println("D - Establir rumb	  	  : " + aeronaus[aeronau].getRumb());
 			System.out.println("F - Finalitzar operativa");
 			
 			accio = e.next().charAt(0);
