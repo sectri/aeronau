@@ -1,17 +1,18 @@
+package aeronaus;
+
 import java.util.Scanner;
 
-public class SistemaControl {
+class SistemaControl {
 
 	Scanner e = new Scanner(System.in);
 	Aeronau[] aeronaus = new Aeronau[5];
-	EspaiAeri espaiAeri = new EspaiAeri();
 	
 	public static void main(String[] args) {
 		SistemaControl SC = new SistemaControl();
 		SC.SControl();
 	}
 		
-	public void SControl() {
+	void SControl() {
 		
 		char menuNum;
 		
@@ -57,15 +58,15 @@ public class SistemaControl {
 		while(menuNum!='5');
 	}
 	
-	private void infoAeri() {
+	void infoAeri() {
 		
 	}
 
-	private void mantenimentAeri() {
+	void mantenimentAeri() {
 		
 	}
 
-	public int seleccionarNau() {
+	int seleccionarNau() {
 		int aeronau = 5;
 		System.out.println("Selecciona quina aeronau vols utilitzar:");
 		System.out.println();
@@ -79,7 +80,7 @@ public class SistemaControl {
 		return aeronau-1;
 	}
 	
-	public int posicioLliure() {
+	int posicioLliure() {
 		int posicioLliure = 5;
 		
 		for(int c = 0; c < 5; c++) {
@@ -91,24 +92,55 @@ public class SistemaControl {
 		return posicioLliure;
 	}
 	
-	public void crearAeronau(int posicioLliure) {
+	void crearAeronau(int posicioLliure) {
+		boolean ok = false;
+		String matricula;
+		int X = 0; 
+		int Y = 0;
+		
 		System.out.println("Introdueix model: ");
 		String model = e.next();
+		
 		System.out.println("Introdueix fabricant: ");
 		String fabricant = e.next();
+		
 		System.out.println("Introdueix capacitat: ");
 		int capacitat = e.nextInt();
-		System.out.println("Introdueix X: ");
-		int X = e.nextInt();
-		System.out.println("Introdueix Y: ");
-		int Y = e.nextInt();
-		System.out.println("Introdueix matricula: ");
-		String matricula = e.next();
+		
+		switch (posicioLliure) {
+		case 0:
+			X = 10;
+			Y = 100;
+			break;
+		case 1:
+			X = 10;
+			Y = 200;
+			break;
+		case 2:
+			X = 10;
+			Y = 300;
+			break;
+		case 3:
+			X = 10;
+			Y = 400;
+			break;
+		case 4:
+			X = 10;
+			Y = 500;
+			break;
+		}
+		
+		do {
+			System.out.println("Introdueix matricula: ");
+			matricula = e.next();
+			ok = comprovarOk(posicioLliure, matricula);
+		}
+		while(!ok);
 		
 		aeronaus[posicioLliure] = new Aeronau(model, fabricant, capacitat, X, Y, matricula);
 	}
 
-	public void gestionarNau(int aeronau) {
+	void gestionarNau(int aeronau) {
 		aeronaus[aeronau].setAparcat(false);
 		char accio;
 		do {
@@ -159,7 +191,7 @@ public class SistemaControl {
 		while(accio != 'f' && accio != 'F');
 	}
 
-	public void motorOnOff(int aeronau) {
+	void motorOnOff(int aeronau) {
 		if(!aeronaus[aeronau].getMotorEnces()) {
 			aeronaus[aeronau].setMotorEnces(true);
 			System.out.println("Motor ences");
@@ -176,12 +208,12 @@ public class SistemaControl {
 				System.out.println("Baixa l'alçada a 0");
 			}
 			if(!aeronaus[aeronau].getTrenAterratgeDesplegat()) {
-				System.out.println("Treu el tren d'aterratge");
+				System.out.println("Desplega el tren d'aterratge");
 			}
 		}
 	}
 
-	public void setVelocitat(int aeronau) {
+	void setVelocitat(int aeronau) {
 		if(aeronaus[aeronau].getMotorEnces()) {
 			System.out.println("Introdueix velocitat: ");
 			int velocitat = e.nextInt();
@@ -192,7 +224,7 @@ public class SistemaControl {
 					System.out.println("Velocitat actualitzada");
 				}
 				else {
-					System.out.println("Plega el tren d'aterratge");
+					System.out.println("Primer plega el tren d'aterratge");
 				}
 			}
 			else if(velocitat < 300 && velocitat >= 180) {
@@ -205,7 +237,7 @@ public class SistemaControl {
 					System.out.println("Velocitat actualitzada");
 				}
 				else {
-					System.out.println("Desplega el tren d'aterratge");
+					System.out.println("Primer desplega el tren d'aterratge");
 				}
 			}
 		}
@@ -214,7 +246,7 @@ public class SistemaControl {
 		}
 	}
 	
-	public void setAlcada(int aeronau) {
+	void setAlcada(int aeronau) {
 		if(aeronaus[aeronau].getMotorEnces()) {
 			System.out.println("Introdueix alçada: ");
 			int alcada = e.nextInt();
@@ -226,7 +258,7 @@ public class SistemaControl {
 						System.out.println("Alçada actualitzada");
 					}
 					else {
-						System.out.println("Plega el tren d'aterratge");
+						System.out.println("Primer plega el tren d'aterratge");
 					}
 				}
 				else if(alcada < 500) {
@@ -236,7 +268,7 @@ public class SistemaControl {
 							System.out.println("Alçada actualitzada");
 						}
 						else {
-							System.out.println("Desplega el tren d'aterratge");
+							System.out.println("Primer desplega el tren d'aterratge");
 						}
 					}
 					else {
@@ -246,7 +278,7 @@ public class SistemaControl {
 				}
 			}
 			else {
-				System.out.println("Vas massa lent per augmentar l'alçada");
+				System.out.println("Augmenta velocitat minim a 180 per augmentar l'alçada");
 			}
 		}
 		else {
@@ -254,7 +286,7 @@ public class SistemaControl {
 		}
 	}
 	
-	public void setTrenAterratge(int aeronau) {
+	void setTrenAterratge(int aeronau) {
 		if(aeronaus[aeronau].getMotorEnces()) {
 			if(aeronaus[aeronau].getTrenAterratgeDesplegat() == false) {
 				setTrenAccio(aeronau, false);
@@ -273,7 +305,7 @@ public class SistemaControl {
 		}
 	}
 	
-	public void setTrenAccio(int aeronau, boolean desplegat) {
+	void setTrenAccio(int aeronau, boolean desplegat) {
 		if(aeronaus[aeronau].getAlcada() < 500 && aeronaus[aeronau].getVelocitat() < 300) {
 			if(!desplegat) {
 				aeronaus[aeronau].setTrenAterratgeDesplegat(true);
@@ -286,15 +318,15 @@ public class SistemaControl {
 		}
 		else {
 			if(aeronaus[aeronau].getAlcada() >= 500) {
-				System.out.println("Baixa l'altura per desplegar el tren d'aterratge");
+				System.out.println("Baixa l'altura a menys de 500 per desplegar el tren d'aterratge");
 			}
 			if(aeronaus[aeronau].getVelocitat() >= 300) {
-				System.out.println("Baixa la velocitat per desplegar el tren d'aterratge");
+				System.out.println("Baixa la velocitat a menys de 300 per desplegar el tren d'aterratge");
 			}
 		}
 	}
 	
-	public void setAparcat(int aeronau) {
+	void setAparcat(int aeronau) {
 		if(!aeronaus[aeronau].getMotorEnces() && aeronaus[aeronau].getVelocitat() == 0 && aeronaus[aeronau].getAlcada() == 0) {
 			aeronaus[aeronau].setAparcat(true);
 			System.out.println("Aeronau aparcada");
@@ -312,7 +344,7 @@ public class SistemaControl {
 		}
 	}
 	
-	public void setRumb(int aeronau) {
+	void setRumb(int aeronau) {
 		System.out.println("Selecciona rumb: ");
 		int rumb = e.nextInt();
 		if(rumb >= 0 && rumb <= 360) {
@@ -323,27 +355,52 @@ public class SistemaControl {
 		}
 	}
 	
-	public void setXY(int aeronau) {
-		//no es pot seleccionar fins alcada > 0
-		System.out.println("Selecciona X: ");
-		int X = e.nextInt();
-		System.out.println("Selecciona Y: ");
-		int Y = e.nextInt();
-		boolean error = false;
-		for(int c = 0; c < aeronaus.length; c++) {
-			if(aeronaus[aeronau] != null) {
-				if((aeronaus[aeronau].getX() - X) <= 1 && (aeronaus[aeronau].getY() - Y) <= 1
-						&& (aeronaus[aeronau].getX() - X) >= -1 && (aeronaus[aeronau].getY() - Y) >= -1) {
-					System.out.println("Les naus no es poden creuar");
-					error = true;
+	void setXY(int aeronau) {
+		if(aeronaus[aeronau].getMotorEnces()) {
+			if(aeronaus[aeronau].getAlcada() > 0) {
+				System.out.println("Selecciona X: ");
+				int X = e.nextInt();
+				System.out.println("Selecciona Y: ");
+				int Y = e.nextInt();
+				boolean error = false;
+				for(int c = 0; c < aeronaus.length; c++) {
+					if(aeronaus[aeronau] != null) {
+						if((aeronaus[aeronau].getX() - X) <= 1 && (aeronaus[aeronau].getY() - Y) <= 1
+								&& (aeronaus[aeronau].getX() - X) >= -1 && (aeronaus[aeronau].getY() - Y) >= -1) {
+							System.out.println("Les naus no es poden creuar");
+							error = true;
+							break;
+						}
+					}
+				}
+				if(error == false) {
+					aeronaus[aeronau].setXY(X, Y);
+					System.out.println("X i Y actualitzats");
+				}
+			}
+			else {
+				System.out.println("Primer enlaira");
+			}
+		}
+		else {
+			System.out.println("El motor esta apagat");
+		}
+	}
+
+	boolean comprovarOk(int posicioLliure, String matricula) {
+		boolean ok = true;
+		for(int c = 0; c < 5; c++) {
+			if(c == posicioLliure) {
+				continue;
+			}
+			if(aeronaus[c] != null) {
+				if(aeronaus[c].getMatricula().equals(matricula)) {
+					ok = false;
+					System.out.println("Hi  ha una aeronau amb el mateix nom");
 					break;
 				}
 			}
 		}
-		if(error == false) {
-			aeronaus[aeronau].setXY(X, Y);
-			System.out.println("X i Y actualitzats");
-		}
+		return ok;
 	}
-	
 } 
