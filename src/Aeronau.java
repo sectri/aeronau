@@ -47,6 +47,11 @@ public class Aeronau {
 	public void setTrenAterratgeDesplegat(boolean trenAterratge) {
 		this.trenAterratgeDesplegat = trenAterratge;
 	}
+	
+	public void setXY(int X, int Y){
+		this.x = X;
+		this.y = Y;
+	}
 
 	//Getters
 	

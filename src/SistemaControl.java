@@ -4,6 +4,7 @@ public class SistemaControl {
 
 	Scanner e = new Scanner(System.in);
 	Aeronau[] aeronaus = new Aeronau[5];
+	EspaiAeri espaiAeri = new EspaiAeri();
 	
 	public static void main(String[] args) {
 		SistemaControl SC = new SistemaControl();
@@ -122,25 +123,25 @@ public class SistemaControl {
 			
 			accio = e.next().charAt(0);
 			switch(accio) {
-			case 'e':
-			case 'E':
-				motorOnOff(aeronau);
+			case 'q':
+			case 'Q':
+				setTrenAterratge(aeronau);
 				break;
 			case 'w':
 			case 'W':
 				setVelocitat(aeronau);
 				break;
+			case 'e':
+			case 'E':
+				motorOnOff(aeronau);
+				break;
+			case 'r':
+			case 'R':
+				setXY(aeronau);
+				break;
 			case 'a':
 			case 'A':
 				setAlcada(aeronau);
-				break;
-			case 'q':
-			case 'Q':
-				setTrenAterratge(aeronau);
-				break;
-			case 'd':
-			case 'D':
-				setRumb(aeronau);
 				break;
 			case 's':
 			case 'S':
@@ -148,6 +149,10 @@ public class SistemaControl {
 				if(aeronaus[aeronau].getAparcat()) {
 					accio = 'p';
 				}
+				break;
+			case 'd':
+			case 'D':
+				setRumb(aeronau);
 				break;
 			}
 		}
@@ -289,18 +294,6 @@ public class SistemaControl {
 		}
 	}
 	
-	
-	public void setRumb(int aeronau) {
-		System.out.println("Selecciona rumb");
-		int rumb = e.nextInt();
-		if(rumb > 0 || rumb < 360) {
-			aeronaus[aeronau].setRumb(rumb);
-		}
-		else {
-			System.out.println("Rumb incorrecte");
-		}
-	}
-	
 	public void setAparcat(int aeronau) {
 		if(!aeronaus[aeronau].getMotorEnces() && aeronaus[aeronau].getVelocitat() == 0 && aeronaus[aeronau].getAlcada() == 0) {
 			aeronaus[aeronau].setAparcat(true);
@@ -319,11 +312,38 @@ public class SistemaControl {
 		}
 	}
 	
-	public void setXY(int aeronau) {
-		
+	public void setRumb(int aeronau) {
+		System.out.println("Selecciona rumb: ");
+		int rumb = e.nextInt();
+		if(rumb >= 0 && rumb <= 360) {
+			aeronaus[aeronau].setRumb(rumb);
+		}
+		else {
+			System.out.println("Rumb incorrecte");
+		}
 	}
 	
-	public void setRumb() {
-		
+	public void setXY(int aeronau) {
+		//no es pot seleccionar fins alcada > 0
+		System.out.println("Selecciona X: ");
+		int X = e.nextInt();
+		System.out.println("Selecciona Y: ");
+		int Y = e.nextInt();
+		boolean error = false;
+		for(int c = 0; c < aeronaus.length; c++) {
+			if(aeronaus[aeronau] != null) {
+				if((aeronaus[aeronau].getX() - X) <= 1 && (aeronaus[aeronau].getY() - Y) <= 1
+						&& (aeronaus[aeronau].getX() - X) >= -1 && (aeronaus[aeronau].getY() - Y) >= -1) {
+					System.out.println("Les naus no es poden creuar");
+					error = true;
+					break;
+				}
+			}
+		}
+		if(error == false) {
+			aeronaus[aeronau].setXY(X, Y);
+			System.out.println("X i Y actualitzats");
+		}
 	}
+	
 } 
