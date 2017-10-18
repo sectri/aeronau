@@ -15,9 +15,10 @@ class SistemaControl {
 	void SControl() {
 		
 		char menuNum;
-		int posicioLliure = 5;
+		boolean nausDisponibles = false;
 		
 		do {
+			nausDisponibles = nausDisponibles();
 			System.out.println("1- Donar d'alta avió al sistema");
 			System.out.println("2- Gestiona un dels avions");
 			System.out.println("3- Manteniment de l'espai aeri");
@@ -28,7 +29,7 @@ class SistemaControl {
 			
 			switch(menuNum) {
 			case '1':
-				posicioLliure = posicioLliure();
+				int posicioLliure = posicioLliure();
 				if(posicioLliure != 5) {
 					crearAeronau(posicioLliure);
 				}
@@ -38,7 +39,7 @@ class SistemaControl {
 				
 				break;
 			case '2':
-				if(posicioLliure != 5) {
+				if(nausDisponibles) {
 					int aeronau = 5;
 					aeronau = seleccionarNau();
 					if(aeronaus[aeronau] == null) {
@@ -55,7 +56,7 @@ class SistemaControl {
 				}
 				break;
 			case '3':
-				if(posicioLliure != 5) {
+				if(nausDisponibles) {
 					mantenimentAeri();
 				}
 				else {
@@ -63,7 +64,7 @@ class SistemaControl {
 				}
 				break;
 			case '4':
-				if(posicioLliure != 5) {
+				if(nausDisponibles) {
 					infoAeri();
 				}
 				else {
@@ -76,13 +77,48 @@ class SistemaControl {
 	}
 	
 	void infoAeri() {
-		
+		System.out.println("Sitació de les aeronaus:");
+		System.out.println("		Aeronau 1	Aeronau 2	Aeronau 3	Aeronau 4	Aeronau 5");
+		System.out.println("		-------------------------------------------------------------------------");
+		System.out.print("Marca:            " + infoMostrar("marca") + "	" + infoMostrar("marca"));
+		System.out.println("Model:");
+		System.out.println("Matrícula:");
+		System.out.println("X:");
+		System.out.println("Y:");
+		System.out.println("Alçada:");
+		System.out.println("Velocitat:");
+		System.out.println("Tren aterratge:");
+		System.out.println("Motor");
+		System.out.println("Aparcat");
+		System.out.println("");
+		System.out.println("Perills detectats:");
+	}
+	
+	String infoMostrar(String cosa) {
+		return cosa;
 	}
 
 	void mantenimentAeri() {
-		
+		for(int c = 0; c < aeronaus.length; c++) {
+			if(aeronaus[c] != null) {
+				if(aeronaus[c].getAparcat() || aeronaus[c].getX() < 0 || aeronaus[c].getY() < 0 || aeronaus[c].getX() > 1000 || aeronaus[c].getY() > 1000) {
+					System.out.println("Aeronau amb la matricula " + aeronaus[c].getMatricula() + " eliminada");
+					aeronaus[c] = null;
+				}
+			}
+		}
 	}
 
+	boolean nausDisponibles() {
+		
+		for(int c = 0; c < aeronaus.length; c++) {
+			if(aeronaus[c] != null) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	int seleccionarNau() {
 		int aeronau = 5;
 		System.out.println("Selecciona quina aeronau vols utilitzar:");
