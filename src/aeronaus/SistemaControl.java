@@ -80,21 +80,94 @@ class SistemaControl {
 		System.out.println("Sitació de les aeronaus:");
 		System.out.println("		Aeronau 1	Aeronau 2	Aeronau 3	Aeronau 4	Aeronau 5");
 		System.out.println("		-------------------------------------------------------------------------");
-		System.out.print("Marca:            " + infoMostrar("marca") + "	" + infoMostrar("marca"));
-		System.out.println("Model:");
-		System.out.println("Matrícula:");
-		System.out.println("X:");
-		System.out.println("Y:");
-		System.out.println("Alçada:");
-		System.out.println("Velocitat:");
-		System.out.println("Tren aterratge:");
-		System.out.println("Motor");
-		System.out.println("Aparcat");
+		System.out.println("Fabricant:	  " + infoMostrar("marca", 0) + "		 " + infoMostrar("marca", 1) + "		 " + infoMostrar("marca", 2) + "		 " + infoMostrar("marca", 3) + "		 " + infoMostrar("marca", 4));
+		System.out.println("Model:		  " + infoMostrar("model", 0) + "		 " + infoMostrar("model", 1) + "		 " + infoMostrar("model", 2) + "		 " + infoMostrar("model", 3) + "		 " + infoMostrar("model", 4));
+		System.out.println("Matrícula:	  " + infoMostrar("matricula", 0) + "		 " + infoMostrar("matricula", 1) + "		 " + infoMostrar("matricula", 2) + "		 " + infoMostrar("matricula", 3) + "		 " + infoMostrar("matricula", 4));
+		System.out.println("X:		  " + infoMostrar("x", 0) + "		 " + infoMostrar("x", 1) + "		 " + infoMostrar("x", 2) + "		 " + infoMostrar("x", 3) + "		 " + infoMostrar("x", 4));
+		System.out.println("Y:		  " + infoMostrar("y", 0) + "		 " + infoMostrar("y", 1) + "		 " + infoMostrar("y", 2) + "		 " + infoMostrar("y", 3) + "		 " + infoMostrar("y", 4));
+		System.out.println("Alçada:		  " + infoMostrar("alcada", 0) + "		 " + infoMostrar("alcada", 1) + "		 " + infoMostrar("alcada", 2) + "		 " + infoMostrar("alcada", 3) + "		 " + infoMostrar("alcada", 4));
+		System.out.println("Velocitat:	  " + infoMostrar("velocitat", 0) + "		 " + infoMostrar("velocitat", 1) + "		 " + infoMostrar("velocitat", 2) + "		 " + infoMostrar("velocitat", 3) + "		 " + infoMostrar("velocitat", 4));
+		System.out.println("Tren aterratge:	  " + infoMostrar("tren", 0) + "	 " + infoMostrar("tren", 1) + "	 " + infoMostrar("tren", 2) + "	 " + infoMostrar("tren", 3) + "	 " + infoMostrar("tren", 4));
+		System.out.println("Motor		  " + infoMostrar("motor", 0) + "		 " + infoMostrar("motor", 1) + "		 " + infoMostrar("motor", 2) + "		 " + infoMostrar("motor", 3) + "		 " + infoMostrar("motor", 4));
+		System.out.println("Aparcat		  " + infoMostrar("aparcat", 0) + "	 " + infoMostrar("aparcat", 1) + "	 " + infoMostrar("aparcat", 2) + "	 " + infoMostrar("aparcat", 3) + "	 " + infoMostrar("aparcat", 4));
 		System.out.println("");
 		System.out.println("Perills detectats:");
+		
+		perills();
 	}
 	
-	String infoMostrar(String cosa) {
+	void perills() {
+		for(int c1 = 0; c1 < aeronaus.length; c1++) {
+			if(aeronaus[c1] != null) {
+				for(int c2 = 0; c2 < aeronaus.length; c2++) {
+					if(aeronaus[c2] != null && aeronaus[c2].getMatricula() != aeronaus[c1].getMatricula()) {
+						if(((aeronaus[c1].getAlcada() - aeronaus[c2].getAlcada()) < 500 || (aeronaus[c1].getAlcada() - aeronaus[c2].getAlcada()) > -500) &&
+						((aeronaus[c1].getX() - aeronaus[c2].getX()) < 50 || (aeronaus[c1].getX() - aeronaus[c2].getX()) > -50) &&
+						((aeronaus[c1].getY() - aeronaus[c2].getY()) < 50 || (aeronaus[c1].getY() - aeronaus[c2].getY()) > -50)){
+							System.out.println("La nau amb matricula " + aeronaus[c1].getMatricula() + " esta massa a prop de " + aeronaus[c2].getMatricula());
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	String infoMostrar(String cosa, int aeronau) {
+		if(aeronaus[aeronau] != null) {
+			if(cosa == "marca") {
+					cosa = aeronaus[aeronau].getFabricant();
+				}
+			else if(cosa == "model") {
+				cosa = aeronaus[aeronau].getModel();
+			}
+			else if(cosa == "matricula") {
+				cosa = aeronaus[aeronau].getMatricula();
+			}
+			else if(cosa == "x") {
+				cosa = String.valueOf(aeronaus[aeronau].getX());
+			}
+			else if(cosa == "y") {
+				cosa = String.valueOf(aeronaus[aeronau].getY());
+			}
+			else if(cosa == "alcada") {
+				cosa = String.valueOf(aeronaus[aeronau].getAlcada());
+			}
+			else if(cosa == "velocitat") {
+				cosa = String.valueOf(aeronaus[aeronau].getVelocitat());
+			}
+			else if(cosa == "tren") {
+				if(aeronaus[aeronau].getTrenAterratgeDesplegat()) {
+					cosa = "Desplegat";
+				}
+				else {
+					cosa = "Plegat";
+				}
+			}
+			else if(cosa == "motor") {
+				if(aeronaus[aeronau].getMotorEnces()) {
+					cosa = "On";
+				}
+				else {
+					cosa = "Off";
+				}
+			}
+			else if(cosa == "aparcat") {
+				if(aeronaus[aeronau].getAparcat()) {
+					cosa = "Aparcat";
+				}
+				else {
+					cosa = "No aparcat";
+				}
+			}
+		}
+		else {
+			if(cosa == "tren" || cosa == "aparcat") {
+				cosa = "	";
+			}
+			else {
+				cosa = "";
+			}
+		}
 		return cosa;
 	}
 
@@ -467,7 +540,7 @@ class SistemaControl {
 			if(aeronaus[c] != null) {
 				if(aeronaus[c].getMatricula().equals(matricula)) {
 					ok = false;
-					System.out.println("Hi  ha una aeronau amb el mateix nom");
+					System.out.println("Hi ha una aeronau amb la meteixa matricula");
 					break;
 				}
 			}
