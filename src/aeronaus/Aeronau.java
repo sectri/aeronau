@@ -11,7 +11,7 @@ public class Aeronau {
 	private int velocitat = 0;
 	private int alcada = 0;
 	private int rumb;
-	private boolean aparcat = true;
+	private boolean aparcat = false;
 	private boolean trenAterratgeDesplegat = true;
 	
 	public Aeronau(String model, String fabricant, int capacitat, int X, int Y, String matricula) {
