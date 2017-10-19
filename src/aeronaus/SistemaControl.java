@@ -90,22 +90,37 @@ class SistemaControl {
 		System.out.println("Tren aterratge:	  " + infoMostrar("tren", 0) + "	 " + infoMostrar("tren", 1) + "	 " + infoMostrar("tren", 2) + "	 " + infoMostrar("tren", 3) + "	 " + infoMostrar("tren", 4));
 		System.out.println("Motor		  " + infoMostrar("motor", 0) + "		 " + infoMostrar("motor", 1) + "		 " + infoMostrar("motor", 2) + "		 " + infoMostrar("motor", 3) + "		 " + infoMostrar("motor", 4));
 		System.out.println("Aparcat		  " + infoMostrar("aparcat", 0) + "	 " + infoMostrar("aparcat", 1) + "	 " + infoMostrar("aparcat", 2) + "	 " + infoMostrar("aparcat", 3) + "	 " + infoMostrar("aparcat", 4));
-		System.out.println("");
+		System.out.println();
 		System.out.println("Perills detectats:");
+		System.out.println();
 		
 		perills();
 	}
 	
 	void perills() {
+		int c2;
 		for(int c1 = 0; c1 < aeronaus.length; c1++) {
 			if(aeronaus[c1] != null) {
-				for(int c2 = 0; c2 < aeronaus.length; c2++) {
+				for(c2 = c1 + 1; c2 < aeronaus.length; c2++) {
 					if(aeronaus[c2] != null && aeronaus[c2].getMatricula() != aeronaus[c1].getMatricula()) {
-						if(((aeronaus[c1].getAlcada() - aeronaus[c2].getAlcada()) < 500 || (aeronaus[c1].getAlcada() - aeronaus[c2].getAlcada()) > -500) &&
-						((aeronaus[c1].getX() - aeronaus[c2].getX()) < 50 || (aeronaus[c1].getX() - aeronaus[c2].getX()) > -50) &&
-						((aeronaus[c1].getY() - aeronaus[c2].getY()) < 50 || (aeronaus[c1].getY() - aeronaus[c2].getY()) > -50)){
-							System.out.println("La nau amb matricula " + aeronaus[c1].getMatricula() + " esta massa a prop de " + aeronaus[c2].getMatricula());
-						}
+						int alcada = aeronaus[c1].getAlcada() - aeronaus[c2].getAlcada();
+						int X = aeronaus[c1].getX() - aeronaus[c2].getX();
+						int Y = aeronaus[c1].getY() - aeronaus[c2].getY();
+						
+						if(alcada < 500 && alcada > -500) {
+							if((X < 50 && X > -50) && (Y < 50 && Y > -50)) {
+								System.out.println("Perill de colisió: " + aeronaus[c1].getMatricula() + " i " + aeronaus[c2].getMatricula() + ": Mateixa X i Y. Alçada de "+ alcada + " metres entre elles");
+								System.out.println();
+							}
+							else if(X < 50 && X > -50){
+								System.out.println("Perill de colisió: " + aeronaus[c1].getMatricula() + " i " + aeronaus[c2].getMatricula() + ": Mateixa X. Alçada de "+ alcada + " metres entre elles");
+								System.out.println();
+							}
+							else if(Y < 50 && Y > -50) {
+								System.out.println("Perill de colisió: " + aeronaus[c1].getMatricula() + " i " + aeronaus[c2].getMatricula() + ": Mateixa Y. Alçada de "+ alcada + " metres entre elles");
+								System.out.println();
+							}
+						}	
 					}
 				}
 			}
@@ -235,23 +250,23 @@ class SistemaControl {
 		
 		switch (posicioLliure) {
 		case 0:
-			X = 10;
+			X = 100;
 			Y = 100;
 			break;
 		case 1:
-			X = 10;
+			X = 200;
 			Y = 200;
 			break;
 		case 2:
-			X = 10;
+			X = 300;
 			Y = 300;
 			break;
 		case 3:
-			X = 10;
+			X = 400;
 			Y = 400;
 			break;
 		case 4:
-			X = 10;
+			X = 500;
 			Y = 500;
 			break;
 		}
